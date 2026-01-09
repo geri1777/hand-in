@@ -29,4 +29,6 @@ async function checkForUpdate(): Promise<string | undefined> {
   }
 }
 
-export { rgbToAnsi256, hexToRgb, checkForUpdate };
+const getTimeString = () => `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`;
+
+export { rgbToAnsi256, hexToRgb, checkForUpdate, getTimeString };
