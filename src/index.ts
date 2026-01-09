@@ -9,10 +9,9 @@ import { already_uploaded, index, index_confirm } from "./page_helper.js";
 import { COLORS } from "./contants.js";
 import { BUN_VERSION, ELYSIA_VERSION, HANDIN_VERSION } from "./version_helper.js";
 import { file_helper } from "./file_helper.js";
-import { checkForUpdate } from "./utils.js";
+import { checkForUpdate, getTimeString } from "./utils.js";
 import { REPLACER_SCRIPT } from "./update_helper.js";
 import { spawn } from "child_process";
-import { spawnSync } from "node:child_process";
 
 const DOMAIN = "handin";
 
@@ -211,7 +210,9 @@ new Elysia()
       }
 
       console.log(
-        `${COLORS.YELLOW}\nFájl feltöltve: ${COLORS.RED}${f.name} (${COLORS.GREEN}${f.size} bájt${COLORS.RED}) ${
+        `${COLORS.YELLOW}\n[${COLORS.GREEN}${getTimeString()}${COLORS.YELLOW}] Fájl feltöltve: ${COLORS.RED}${
+          f.name
+        } (${COLORS.GREEN}${f.size} bájt${COLORS.RED}) ${
           COLORS.BLUE + server?.requestIP(request)?.address.toString() + COLORS.RESET
         }`
       );
