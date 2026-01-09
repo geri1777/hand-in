@@ -3,6 +3,7 @@ import catWebpUrl from "./static/already_uploaded/cat.webp";
 import cat2WebpUrl from "./static/already_uploaded/cat2.webp";
 import cat3WebpUrl from "./static/already_uploaded/cat3.webp";
 import cat4WebpUrl from "./static/already_uploaded/cat4.webp";
+import cat5WebpUrl from "./static/already_uploaded/cat5.webp";
 
 import icon1024Url from "./static/icons/icon1024.webp";
 import icon512Url from "./static/icons/icon512.webp";
@@ -14,6 +15,6 @@ import githubIconUrl from "./static/icons/github.svg";
 import arrowIconUrl from "./static/icons/arrow.svg";
 
 export const file_helper = {
-  already_uploaded: [catWebpUrl, cat2WebpUrl, cat3WebpUrl, cat4WebpUrl],
+  already_uploaded: [catWebpUrl, cat2WebpUrl, cat3WebpUrl, cat4WebpUrl, cat5WebpUrl],
   icons: { icon1024Url, icon512Url, icon256Url, icon128Url, icon64Url, githubIconUrl, arrowIconUrl },
 };
