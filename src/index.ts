@@ -1,6 +1,6 @@
 import { Elysia, redirect, t } from "elysia";
 import { PublishService } from "./dns_helper.js";
-import { mkdirSync } from "node:fs";
+import { existsSync, mkdirSync } from "node:fs";
 import { html } from "@elysiajs/html";
 import { file, randomUUIDv7 } from "bun";
 import { LockModes, Secret } from "./types.js";
@@ -27,9 +27,7 @@ const SECRET_TTL = CONFIG.lockDuration;
 
 const INDEX_PAGE = CONFIG.confirmSubmission ? index_confirm : index;
 
-try {
-  mkdirSync("uploads");
-} catch {}
+if (!existsSync("uploads")) mkdirSync("uploads");
 
 const FINAL_DOMAIN = await PublishService(DOMAIN);
 
