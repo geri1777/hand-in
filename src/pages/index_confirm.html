@@ -176,9 +176,9 @@
     </form>
     <div id="footer">
       <div id="versions">
-        <span id="handin-version">Hand In: </span>
-        <span id="bun-version">Bun: </span>
-        <span id="elysia-version">Elysia: </span>
+        <span id="handin-version">Hand In: {{HANDIN_VERSION}}</span>
+        <span id="bun-version">Bun: {{BUN_VERSION}}</span>
+        <span id="elysia-version">Elysia: {{ELYSIA_VERSION}}</span>
       </div>
       <div id="health"></div>
     </div>
@@ -223,14 +223,6 @@
             document.getElementById("health").style.boxShadow = "0 0 1rem #f44336";
           });
       }, 5000);
-
-      fetch("/stats")
-        .then((res) => res.json())
-        .then((data) => {
-          document.getElementById("handin-version").textContent += data.HANDIN_VERSION;
-          document.getElementById("elysia-version").textContent += data.ELYSIA_VERSION;
-          document.getElementById("bun-version").textContent += data.BUN_VERSION;
-        });
     </script>
   </body>
 </html>

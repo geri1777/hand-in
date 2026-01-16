@@ -12,6 +12,7 @@ import { file_helper } from "./file_helper.js";
 import { checkForUpdate, getTimeString } from "./utils.js";
 import { REPLACER_SCRIPT } from "./update_helper.js";
 import { spawn } from "child_process";
+import { placeholderHelper } from "./placeholder_helper.js";
 
 const DOMAIN = "handin";
 
@@ -143,17 +144,17 @@ new Elysia()
       switch (LOCK_MODE) {
         case LockModes.COOKIE:
           if (SECRETS.some((secret) => secret.value === (cookie.secret.value ?? "")))
-            return file(already_uploaded.toString());
+            return placeholderHelper(await file(already_uploaded.toString()).text());
           break;
         case LockModes.IP:
           if (SECRETS.some((secret) => secret.value === (server?.requestIP(request)?.address?.toString() ?? "")))
-            return file(already_uploaded.toString());
+            return placeholderHelper(await file(already_uploaded.toString()).text());
           break;
         default:
           break;
       }
 
-      return file(INDEX_PAGE.toString());
+      return placeholderHelper(await file(INDEX_PAGE.toString()).text());
     },
     {
       cookie: t.Cookie({
