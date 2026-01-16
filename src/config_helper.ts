@@ -23,5 +23,30 @@ export class Config {
     this.lockMode = config.lockMode as LockModes;
     this.lockDuration = config.lockDuration;
     this.confirmSubmission = config.confirmSubmission ?? false;
+
+    let updated = false;
+    if (!config.lockMode) {
+      this.lockMode = LockModes.IP;
+      updated = true;
+    }
+
+    if (!config.lockDuration) {
+      this.lockDuration = 300;
+      updated = true;
+    }
+
+    if (config.confirmSubmission === undefined) {
+      this.confirmSubmission = false;
+      updated = true;
+    }
+
+    if (updated) {
+      const updatedConfig = {
+        lockMode: this.lockMode,
+        lockDuration: this.lockDuration,
+        confirmSubmission: this.confirmSubmission,
+      };
+      fs.writeFileSync(configPath, JSON.stringify(updatedConfig, null, 2), "utf-8");
+    }
   }
 }
