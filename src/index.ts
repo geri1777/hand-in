@@ -91,8 +91,8 @@ process.stdin.on("data", async (e) => {
         bps > 1024 * 1024
           ? `${(bps / (1024 * 1024)).toFixed(2)} MB/s`
           : bps > 1024
-          ? `${(bps / 1024).toFixed(2)} KB/s`
-          : `${bps.toFixed(0)} B/s`;
+            ? `${(bps / 1024).toFixed(2)} KB/s`
+            : `${bps.toFixed(0)} B/s`;
 
       if (total > 0) {
         const pct = Math.min(100, (received / total) * 100);
@@ -194,17 +194,25 @@ new Elysia()
           break;
       }
 
+      const pictureOptions = file_helper.already_uploaded;
+      const pictureRandomIndex = Math.floor(Math.random() * pictureOptions.length);
+
       if (LOCK_MODE == LockModes.COOKIE) {
         const uuid = randomUUIDv7("base64", Date.now());
         cookie.secret.set({
           value: uuid,
           expires: new Date(Date.now() + SECRET_TTL * 1000),
         });
-        SECRETS.push({ value: uuid, fileName: f.name } as Secret);
+        SECRETS.push({
+          value: uuid,
+          fileName: f.name,
+          pictureFile: file(pictureOptions[pictureRandomIndex]),
+        } as Secret);
       } else {
         SECRETS.push({
           value: server?.requestIP(request)?.address.toString() ?? "",
           fileName: f.name,
+          pictureFile: file(pictureOptions[pictureRandomIndex]),
         } as Secret);
       }
 
@@ -247,11 +255,25 @@ new Elysia()
     }
   )
   .get("/health", () => "OK")
-  .get("/static/already_uploaded", () => {
-    const options = file_helper.already_uploaded;
-    const randomIndex = Math.floor(Math.random() * options.length);
-    return file(options[randomIndex]);
-  })
+  .get(
+    "/static/already_uploaded",
+    ({ cookie, server, request }) => {
+      let secret = null;
+      if (LOCK_MODE == LockModes.COOKIE) {
+        secret = SECRETS.find((secret) => secret.value === (cookie.secret.value ?? ""));
+      } else {
+        secret = SECRETS.find((secret) => secret.value === (server?.requestIP(request)?.address.toString() ?? ""));
+      }
+
+      if (!secret) return "";
+      return secret.pictureFile;
+    },
+    {
+      cookie: t.Cookie({
+        secret: t.Optional(t.String()),
+      }),
+    }
+  )
   .get("/static/icon", () => {
     return file(file_helper.icons.icon512Url);
   })

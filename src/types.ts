@@ -6,4 +6,5 @@ export enum LockModes {
 export type Secret = {
   value: string;
   fileName: string;
+  pictureFile: Bun.BunFile;
 };
