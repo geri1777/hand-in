@@ -50,7 +50,8 @@ Példa:
 ```json
 {
   "lockMode": "IP",
-  "lockDuration": 300
+  "lockDuration": 300,
+  "confirmSubmission": false
 }
 ```
 
@@ -58,6 +59,7 @@ Példa:
   - `IP`: a kliens IP-je alapján „egyszer tölthetsz fel” (amíg fut a program)
   - `COOKIE`: sütibe tesz egy rövid életű tokent
 - `lockDuration`: csak `COOKIE` módban számít, másodpercben (pl. `300` = 5 perc)
+- `confirmSubmission`: `true` vagy `false`, feltöltés előtt jelenjen-e meg jóváhagyási lépés (alapértelmezés: `false`)
 
 Fontos: a zárolás állapota memóriában van; a program újraindításakor nullázódik.
 
